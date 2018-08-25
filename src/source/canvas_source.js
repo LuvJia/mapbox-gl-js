@@ -4,7 +4,7 @@ import ImageSource from './image_source';
 
 import window from '../util/window';
 import rasterBoundsAttributes from '../data/raster_bounds_attributes';
-import VertexArrayObject from '../render/vertex_array_object';
+import SegmentVector from '../data/segment';
 import Texture from '../render/texture';
 import { ErrorEvent } from '../util/evented';
 import ValidationError from '../style-spec/error/validation_error';
@@ -21,20 +21,20 @@ export type CanvasSourceSpecification = {|
 |};
 
 /**
- * Options to add a canvas source type to the map.
+ * 添加canvas类型的数据源到地图上的参数说明.
  *
  * @typedef {Object} CanvasSourceOptions
- * @property {string} type Source type. Must be `"canvas"`.
- * @property {string|HTMLCanvasElement} canvas Canvas source from which to read pixels. Can be a string representing the ID of the canvas element, or the `HTMLCanvasElement` itself.
- * @property {Array<Array<number>>} coordinates Four geographical coordinates denoting where to place the corners of the canvas, specified in `[longitude, latitude]` pairs.
- * @property {boolean} [animate=true] Whether the canvas source is animated. If the canvas is static (i.e. pixels do not need to be re-read on every frame), `animate` should be set to `false` to improve performance.
+ * @property {string} type 数据源类型. 必须是`canvas`类型.
+ * @property {string|HTMLCanvasElement} canvas 从中读取像素的 `canvas` 数据源. 可以是一个表示 `canvas` 元素ID的字符串,或者是 `HTMLCanvasElement` 本身.
+ * @property {Array<Array<number>>} coordinates 四组表示 `canvas` 范围的坐标对,形式为 `[经度, 纬度]` .
+ * @property {boolean} [animate=true] `canvas` 数据源是否开启动画. 如果 `canvas` 是静态的(每一帧所有的像素没有必要重新读取),请把动画选项 `animate` 设置成false,以便提升性能.
  */
 
 /**
- * A data source containing the contents of an HTML canvas. See {@link CanvasSourceOptions} for detailed documentation of options.
+ * 包含 `canvas` 的数据源. 请看 {@link CanvasSourceOptions} 更详细的文档描述.
  *
  * @example
- * // add to map
+ * // 添加数据到map
  * map.addSource('some id', {
  *    type: 'canvas',
  *    canvas: 'idOfMyHTMLCanvas',
@@ -47,7 +47,7 @@ export type CanvasSourceSpecification = {|
  *    ]
  * });
  *
- * // update
+ * // 更新数据源
  * var mySource = map.getSource('some id');
  * mySource.setCoordinates([
  *     [-76.54335737228394, 39.18579907229748],
@@ -56,7 +56,7 @@ export type CanvasSourceSpecification = {|
  *     [-76.54520273208618, 39.17876344106642]
  * ]);
  *
- * map.removeSource('some id');  // remove
+ * map.removeSource('some id');  // 移除
  */
 class CanvasSource extends ImageSource {
     options: CanvasSourceSpecification;
@@ -74,11 +74,11 @@ class CanvasSource extends ImageSource {
     constructor(id: string, options: CanvasSourceSpecification, dispatcher: Dispatcher, eventedParent: Evented) {
         super(id, options, dispatcher, eventedParent);
 
-        // We build in some validation here, since canvas sources aren't included in the style spec:
+        // 验证,因为样式规格不包含canvas数据源:
         if (!options.coordinates) {
             this.fire(new ErrorEvent(new ValidationError(`sources.${id}`, null, 'missing required property "coordinates"')));
         } else if (!Array.isArray(options.coordinates) || options.coordinates.length !== 4 ||
-                options.coordinates.some(c => !Array.isArray(c) || c.length !== 2 || c.some(l => typeof l !== 'number'))) {
+            options.coordinates.some(c => !Array.isArray(c) || c.length !== 2 || c.some(l => typeof l !== 'number'))) {
             this.fire(new ErrorEvent(new ValidationError(`sources.${id}`, null, '"coordinates" property must be an array of 4 longitude/latitude array pairs')));
         }
 
@@ -97,14 +97,14 @@ class CanvasSource extends ImageSource {
     }
 
     /**
-     * Enables animation. The image will be copied from the canvas to the map on each frame.
+     * 开启动画. 地图上的每一帧图像都是从 `canvas` 的一个拷贝.
      * @method play
      * @instance
      * @memberof CanvasSource
      */
 
     /**
-     * Disables animation. The map will display a static copy of the canvas image.
+     * 关闭动画. 地图上将展示一个静态的canvas图像的拷贝.
      * @method pause
      * @instance
      * @memberof CanvasSource
@@ -137,9 +137,9 @@ class CanvasSource extends ImageSource {
     }
 
     /**
-     * Returns the HTML `canvas` element.
+     * 返回HTML `canvas` 元素.
      *
-     * @returns {HTMLCanvasElement} The HTML `canvas` element.
+     * @returns {HTMLCanvasElement} HTML `canvas` 元素.
      */
     getCanvas() {
         return this.canvas;
@@ -158,18 +158,18 @@ class CanvasSource extends ImageSource {
     }
 
     /**
-     * Sets the canvas's coordinates and re-renders the map.
+     * 设置canvas的坐标并重新渲染地图.
      *
      * @method setCoordinates
      * @instance
      * @memberof CanvasSource
-     * @param {Array<Array<number>>} coordinates Four geographical coordinates,
-     *   represented as arrays of longitude and latitude numbers, which define the corners of the canvas.
-     *   The coordinates start at the top left corner of the canvas and proceed in clockwise order.
-     *   They do not have to represent a rectangle.
+     * @param {Array<Array<number>>} coordinates 四组地理坐标对构成的集合,
+     *   每一组坐标是由经纬度构成的数组,四组坐标对表示了 `canvas` 的地理空间范围.
+     *   从左上角开始,按照顺时针.
+     *   并不一定是矩形.
      * @returns {CanvasSource} this
      */
-    // setCoordinates inherited from ImageSource
+    // setCoordinates 方法继承于 ImageSource
 
     prepare() {
         let resize = false;
@@ -184,7 +184,7 @@ class CanvasSource extends ImageSource {
 
         if (this._hasInvalidDimensions()) return;
 
-        if (Object.keys(this.tiles).length === 0) return; // not enough data for current position
+        if (Object.keys(this.tiles).length === 0) return; // 当前位置没有数据
 
         const context = this.map.painter.context;
         const gl = context.gl;
@@ -193,8 +193,8 @@ class CanvasSource extends ImageSource {
             this.boundsBuffer = context.createVertexBuffer(this._boundsArray, rasterBoundsAttributes.members);
         }
 
-        if (!this.boundsVAO) {
-            this.boundsVAO = new VertexArrayObject();
+        if (!this.boundsSegments) {
+            this.boundsSegments = SegmentVector.simpleSegment(0, 0, 4, 2);
         }
 
         if (!this.texture) {
