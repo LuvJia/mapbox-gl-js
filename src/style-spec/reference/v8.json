@@ -17,12 +17,12 @@
     },
     "metadata": {
       "type": "*",
-      "doc": "Arbitrary properties useful to track with the stylesheet, but do not influence rendering. Properties should be prefixed to avoid collisions, like 'mapbox:'."
+      "doc": "用于跟踪样式表的任意属性，但不影响渲染。应预先设置属性以避免冲突，比如 'mapbox:'."
     },
     "center": {
       "type": "array",
       "value": "number",
-      "doc": "Default map center in longitude and latitude.  The style center will be used only if the map has not been positioned by other means (e.g. map options or user interaction).",
+      "doc": "默认以经纬度形式表示地图中心点。只有当地图没有被其他方式定位（地图选项或用户交互等），样式中心点设置才会生效。",
       "example": [
         -73.9749,
         40.7736
@@ -30,7 +30,7 @@
     },
     "zoom": {
       "type": "number",
-      "doc": "Default zoom level.  The style zoom will be used only if the map has not been positioned by other means (e.g. map options or user interaction).",
+      "doc": "默认缩放级别。只有当地图没有被其他方式定位（地图选项或用户交互等），样式缩放才会生效。",
       "example": 12.5
     },
     "bearing": {
@@ -38,14 +38,14 @@
       "default": 0,
       "period": 360,
       "units": "degrees",
-      "doc": "Default bearing, in degrees. The bearing is the compass direction that is \"up\"; for example, a bearing of 90° orients the map so that east is up. This value will be used only if the map has not been positioned by other means (e.g. map options or user interaction).",
+      "doc": "默认方位，用度表示。方向是指南针向上的方向; 举例, 方位为90度的地图，东方朝上。只有当地图没有被其他方式定位（地图选项或用户交互等），这个值才会生效。",
       "example": 29
     },
     "pitch": {
       "type": "number",
       "default": 0,
       "units": "degrees",
-      "doc": "Default pitch, in degrees. Zero is perpendicular to the surface, for a look straight down at the map, while a greater value like 60 looks ahead towards the horizon. The style pitch will be used only if the map has not been positioned by other means (e.g. map options or user interaction).",
+      "doc": "默认地图的俯仰角度。0度的时候从上往下看地图，垂直于地图，地图平行于屏幕，60度的时候遥望地平线方向。只有当地图没有被其他方式定位（地图选项或用户交互等），这个值才会生效。",
       "example": 50
     },
     "light": {
@@ -60,7 +60,7 @@
     "sources": {
       "required": true,
       "type": "sources",
-      "doc": "Data source specifications.",
+      "doc": "数据源规范",
       "example": {
         "mapbox-streets": {
           "type": "vector",
