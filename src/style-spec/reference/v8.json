@@ -50,7 +50,7 @@
     },
     "light": {
       "type": "light",
-      "doc": "The global light source.",
+      "doc": "全局的轻量级数据源。",
       "example": {
         "anchor": "viewport",
         "color": "white",
@@ -70,7 +70,7 @@
     },
     "sprite": {
       "type": "string",
-      "doc": "A base URL for retrieving the sprite image and metadata. The extensions `.png`, `.json` and scale factor `@2x.png` will be automatically appended. This property is required if any layer uses the `background-pattern`, `fill-pattern`, `line-pattern`, `fill-extrusion-pattern`, or `icon-image` properties.",
+      "doc": "获取雪碧图和元数据的url。文件后缀名 `.png`, `.json` 和缩放比例 `@2x.png` 将会自动添加。任何使用了 `background-pattern`， `fill-pattern`， `line-pattern`， `fill-extrusion-pattern` ， `icon-image` 等属性的图层需要加上这个属性设置。",
       "example": "mapbox://sprites/mapbox/bright-v8"
     },
     "glyphs": {
@@ -90,7 +90,7 @@
       "required": true,
       "type": "array",
       "value": "layer",
-      "doc": "Layers will be drawn in the order of this array.",
+      "doc": "将按照此数组的顺序绘制图层。",
       "example": [
         {
           "id": "water",
@@ -107,7 +107,7 @@
   "sources": {
     "*": {
       "type": "source",
-      "doc": "Specification of a data source. For vector and raster sources, either TileJSON or a URL to a TileJSON must be provided. For image and video sources, a URL must be provided. For GeoJSON sources, a URL or inline GeoJSON must be provided."
+      "doc": "数据源规范。对于矢量和栅格数据源，必须提供TileJSON或者TileJSON的url。对于图像和视频数据源，必须提供相应的url。对于GeoJSON数据源，需要提供url或内联的GeoJSON。"
     }
   },
   "source": [
