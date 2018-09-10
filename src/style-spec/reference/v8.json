@@ -75,12 +75,12 @@
     },
     "glyphs": {
       "type": "string",
-      "doc": "A URL template for loading signed-distance-field glyph sets in PBF format. The URL must include `{fontstack}` and `{range}` tokens. This property is required if any layer uses the `text-field` layout property.",
+      "doc": "用于以pbf格式加载signed-distance-field方式生成的字体集的url模板。url必须包括 `{fontstack}` 和 `{range}` 标记。任何使用了 `text-field` 布局属性的图层必须添加该属性。",
       "example": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf"
     },
     "transition": {
       "type": "transition",
-      "doc": "A global transition definition to use as a default across properties, to be used for timing transitions between one value and the next when no property-specific transition is set. Collision-based symbol fading is controlled independently of the style's `transition` property.",
+      "doc": "一个全局转换定义，用作跨属性的默认值，用于在未设定特定属性转换的时在一个值与下一个值之间进行时序转换。基于碰撞的符号衰退的控制与样式的 `transition` 属性无关。",
       "example": {
         "duration": 300,
         "delay": 0
@@ -124,19 +124,19 @@
       "type": "enum",
       "values": {
         "vector": {
-          "doc": "A vector tile source."
+          "doc": "矢量切片数据源"
         }
       },
-      "doc": "The type of the source."
+      "doc": "数据源的类型。"
     },
     "url": {
       "type": "string",
-      "doc": "A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<mapid>`."
+      "doc": "TileJSON数据源的url。支持的协议是 `http:`， `https:`， and `mapbox://<mapid>`。"
     },
     "tiles": {
       "type": "array",
       "value": "string",
-      "doc": "An array of one or more tile source URLs, as in the TileJSON spec."
+      "doc": "包含一个或多个瓦片url的数组，如TileJSON规范里的的数组."
     },
     "bounds": {
       "type": "array",
@@ -148,30 +148,30 @@
         180,
         85.0511
       ],
-      "doc": "An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in a source, no tiles outside of the given bounds are requested by Mapbox GL."
+      "doc": "包含数据源边界框东南角和东北角的经纬度数组，其顺序如下： `[sw.lng, sw.lat, ne.lng, ne.lat]`。当该属性包含在数据源中时，Mapbox GL将不会显示边界框之外的瓦片。"
     },
     "scheme": {
       "type": "enum",
       "values": {
         "xyz": {
-          "doc": "Slippy map tilenames scheme."
+          "doc": "Slippy map瓦片名称方案."
         },
         "tms": {
-          "doc": "OSGeo spec scheme."
+          "doc": "OSGeo规范方案。"
         }
       },
       "default": "xyz",
-      "doc": "Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed."
+      "doc": "影响web墨卡托投影（又叫球形墨卡托投影）下瓦片坐标的y方向。"
     },
     "minzoom": {
       "type": "number",
       "default": 0,
-      "doc": "Minimum zoom level for which tiles are available, as in the TileJSON spec."
+      "doc": "瓦片的最小缩放级别，如TileJSON规范所示。"
     },
     "maxzoom": {
       "type": "number",
       "default": 22,
-      "doc": "Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles at the maxzoom are used when displaying the map at higher zoom levels."
+      "doc": "瓦片的最大缩放级别，如TileJSON规范所示。当在超过最大缩放级别显示地图时，将使用最大缩放级别中的数据。"
     },
     "attribution": {
       "type": "string",
@@ -188,14 +188,14 @@
       "type": "enum",
       "values": {
         "raster": {
-          "doc": "A raster tile source."
+          "doc": "栅格瓦片数据源"
         }
       },
-      "doc": "The type of the source."
+      "doc": "数据源类型"
     },
     "url": {
       "type": "string",
-      "doc": "A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<mapid>`."
+      "doc": "TileJSON资源的url。支持的协议包括 `http:`， `https:`， and `mapbox://<mapid>`。"
     },
     "tiles": {
       "type": "array",
