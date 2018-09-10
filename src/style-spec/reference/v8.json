@@ -70,12 +70,12 @@
     },
     "sprite": {
       "type": "string",
-      "doc": "获取雪碧图和元数据的url。文件后缀名 `.png`, `.json` 和缩放比例 `@2x.png` 将会自动添加。任何使用了 `background-pattern`， `fill-pattern`， `line-pattern`， `fill-extrusion-pattern` ， `icon-image` 等属性的图层需要加上这个属性设置。",
+      "doc": "获取雪碧图和元数据的url。文件后缀名 `.png`, `.json` 和缩放比例 `@2x.png` 将会自动添加。任何使用了 `background-pattern`， `fill-pattern`， `line-pattern`， `fill-extrusion-pattern` ， `icon-image` 等属性的图层需要加上这个属性设置。url必须是完整地址，包括方案、权限和路径组件。",
       "example": "mapbox://sprites/mapbox/bright-v8"
     },
     "glyphs": {
       "type": "string",
-      "doc": "用于以pbf格式加载signed-distance-field方式生成的字体集的url模板。url必须包括 `{fontstack}` 和 `{range}` 标记。任何使用了 `text-field` 布局属性的图层必须添加该属性。",
+      "doc": "用于以pbf格式加载signed-distance-field方式生成的字体集的url模板。url必须包括 `{fontstack}` 和 `{range}` 标记。任何使用了 `text-field` 布局属性的图层必须添加该属性。url必须是完整地址，包括方案、权限和路径组件。",
       "example": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf"
     },
     "transition": {
@@ -124,7 +124,7 @@
       "type": "enum",
       "values": {
         "vector": {
-          "doc": "矢量切片数据源"
+          "doc": "矢量切片数据源。瓦片必须是Mapbox矢量切片格式。矢量切片中的所有几何坐标必须介于`-1*(extent)`和`(extent*2)-1`之间。使用矢量数据源的所有图层都必须指定`'source-layer'`，对于Mapbox托管的矢量切片，`'url'`值的格式应为`mapbox://mapid`。"
         }
       },
       "doc": "数据源的类型。"
@@ -154,7 +154,7 @@
       "type": "enum",
       "values": {
         "xyz": {
-          "doc": "Slippy map瓦片名称方案."
+          "doc": "Slippy map tilenames方案。"
         },
         "tms": {
           "doc": "OSGeo规范方案。"
@@ -175,11 +175,11 @@
     },
     "attribution": {
       "type": "string",
-      "doc": "Contains an attribution to be displayed when the map is shown to a user."
+      "doc": "包含向用户显示地图时要显示的属性。"
     },
     "*": {
       "type": "*",
-      "doc": "Other keys to configure the data source."
+      "doc": "配置数据源的其他关键。"
     }
   },
   "source_raster": {
@@ -188,7 +188,7 @@
       "type": "enum",
       "values": {
         "raster": {
-          "doc": "栅格瓦片数据源"
+          "doc": "栅格瓦片数据源.对于Mapbox托管的栅格切片，`'url'`值的格式应为`mapbox://mapid`。"
         }
       },
       "doc": "数据源类型"
@@ -200,7 +200,7 @@
     "tiles": {
       "type": "array",
       "value": "string",
-      "doc": "An array of one or more tile source URLs, as in the TileJSON spec."
+      "doc": "包含一个或多个瓦片数据源的url数组，如TileJSON规范所示。"
     },
     "bounds": {
       "type": "array",
@@ -212,44 +212,44 @@
         180,
         85.0511
       ],
-      "doc": "An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in a source, no tiles outside of the given bounds are requested by Mapbox GL."
+      "doc": "包含数据源边界框东南角和东北角的经纬度数组，其顺序如下： `[sw.lng, sw.lat, ne.lng, ne.lat]`。当该属性包含在数据源中时，Mapbox GL将不会显示边界框之外的瓦片。"
     },
     "minzoom": {
       "type": "number",
       "default": 0,
-      "doc": "Minimum zoom level for which tiles are available, as in the TileJSON spec."
+      "doc": "瓦片的最小缩放级别，如TileJSON规范所示。"
     },
     "maxzoom": {
       "type": "number",
       "default": 22,
-      "doc": "Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles at the maxzoom are used when displaying the map at higher zoom levels."
+      "doc": "瓦片的最大缩放级别，如TileJSON规范所示。当在超过最大缩放级别显示地图时，将使用最大缩放级别中的数据。"
     },
     "tileSize": {
       "type": "number",
       "default": 512,
       "units": "pixels",
-      "doc": "The minimum visual size to display tiles for this layer. Only configurable for raster layers."
+      "doc": "显示此图层最小的可见瓦片尺寸。只有栅格图层才能配置该属性。"
     },
     "scheme": {
       "type": "enum",
       "values": {
         "xyz": {
-          "doc": "Slippy map tilenames scheme."
+          "doc": "Slippy map tilenames方案。"
         },
         "tms": {
-          "doc": "OSGeo spec scheme."
+          "doc": "OSGeo规范方案。"
         }
       },
       "default": "xyz",
-      "doc": "Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed."
+      "doc": "影响web墨卡托投影（又叫球形墨卡托投影）下瓦片坐标的y方向。"
     },
     "attribution": {
       "type": "string",
-      "doc": "Contains an attribution to be displayed when the map is shown to a user."
+      "doc": "包含向用户显示地图时要显示的属性。"
     },
     "*": {
       "type": "*",
-      "doc": "Other keys to configure the data source."
+      "doc": "配置数据源的其他关键。"
     }
   },
   "source_raster_dem": {
@@ -258,19 +258,19 @@
       "type": "enum",
       "values": {
         "raster-dem": {
-          "doc": "A RGB-encoded raster DEM source"
+          "doc": "rgb编码的DEM数据源。当前只支持Mapbox Terrain RGB (`mapbox://mapbox.terrain-rgb`)"
         }
       },
-      "doc": "The type of the source."
+      "doc": "数据源类型"
     },
     "url": {
       "type": "string",
-      "doc": "A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<mapid>`."
+      "doc": "TileJSON资源的url。支持的协议包括 `http:`， `https:`， and `mapbox://<mapid>`。"
     },
     "tiles": {
       "type": "array",
       "value": "string",
-      "doc": "An array of one or more tile source URLs, as in the TileJSON spec."
+      "doc": "包含一个或多个瓦片数据源的url数组，如TileJSON规范所示。"
     },
     "bounds": {
       "type": "array",
@@ -282,44 +282,44 @@
         180,
         85.0511
       ],
-      "doc": "An array containing the longitude and latitude of the southwest and northeast corners of the source's bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in a source, no tiles outside of the given bounds are requested by Mapbox GL."
+      "doc": "包含数据源边界框东南角和东北角的经纬度数组，其顺序如下： `[sw.lng, sw.lat, ne.lng, ne.lat]`。当该属性包含在数据源中时，Mapbox GL将不会显示边界框之外的瓦片。"
     },
     "minzoom": {
       "type": "number",
       "default": 0,
-      "doc": "Minimum zoom level for which tiles are available, as in the TileJSON spec."
+      "doc": "瓦片的最小缩放级别，如TileJSON规范所示。"
     },
     "maxzoom": {
       "type": "number",
       "default": 22,
-      "doc": "Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles at the maxzoom are used when displaying the map at higher zoom levels."
+      "doc": "瓦片的最大缩放级别，如TileJSON规范所示。当在超过最大缩放级别显示地图时，将使用最大缩放级别中的数据。"
     },
     "tileSize": {
       "type": "number",
       "default": 512,
       "units": "pixels",
-      "doc": "The minimum visual size to display tiles for this layer. Only configurable for raster layers."
+      "doc": "显示此图层最小的可见瓦片尺寸。只有栅格图层才能配置该属性。"
     },
     "attribution": {
       "type": "string",
-      "doc": "Contains an attribution to be displayed when the map is shown to a user."
+      "doc": "包含向用户显示地图时要显示的属性。"
     },
     "encoding": {
       "type": "enum",
       "values": {
         "terrarium": {
-          "doc": "Terrarium format PNG tiles. See https://aws.amazon.com/es/public-datasets/terrain/ for more info."
+          "doc": "Terrarium格式png切片。详情请看 https://aws.amazon.com/es/public-datasets/terrain/ 。"
         },
         "mapbox": {
-          "doc": "Mapbox Terrain RGB tiles. See https://www.mapbox.com/help/access-elevation-data/#mapbox-terrain-rgb for more info."
+          "doc": "Mapbox Terrain RGB瓦片。详情请看 See https://www.mapbox.com/help/access-elevation-data/#mapbox-terrain-rgb 。"
         }
       },
       "default": "mapbox",
-      "doc": "The encoding used by this source. Mapbox Terrain RGB is used by default"
+      "doc": "此数据源使用的编码。默认是 Mapbox Terrain RGB。"
     },
     "*": {
       "type": "*",
-      "doc": "Other keys to configure the data source."
+      "doc": "配置数据源的其他关键。"
     }
   },
   "source_geojson": {
@@ -328,55 +328,55 @@
       "type": "enum",
       "values": {
         "geojson": {
-          "doc": "A GeoJSON data source."
+          "doc": "GeoJSON数据源。数据必须通过`'属性提供'`，其值可以是url或内联GeoJSON。"
         }
       },
-      "doc": "The data type of the GeoJSON source."
+      "doc": "GeoJSON数据源的数据类型。"
     },
     "data": {
       "type": "*",
-      "doc": "A URL to a GeoJSON file, or inline GeoJSON."
+      "doc": "GeoJSON文件的url或内联的GeoJSON。"
     },
     "maxzoom": {
       "type": "number",
       "default": 18,
-      "doc": "Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom levels)."
+      "doc": "创建矢量切片的最大缩放级别(值越大意味着高缩放级别下更好的显示细节)。"
     },
     "attribution": {
       "type": "string",
-      "doc": "Contains an attribution to be displayed when the map is shown to a user."
+      "doc": "包含向用户显示地图时要显示的属性。"
     },
     "buffer": {
       "type": "number",
       "default": 128,
       "maximum": 512,
       "minimum": 0,
-      "doc": "Size of the tile buffer on each side. A value of 0 produces no buffer. A value of 512 produces a buffer as wide as the tile itself. Larger values produce fewer rendering artifacts near tile edges and slower performance."
+      "doc": "每侧的瓦片缓冲区大小。0值不产生缓冲区。512会产生和瓦片本身一样宽的缓冲区。较大的值绘制瓦片拼接边缘产生更少的瑕疵，同时也意味着更差的性能。"
     },
     "tolerance": {
       "type": "number",
       "default": 0.375,
-      "doc": "Douglas-Peucker simplification tolerance (higher means simpler geometries and faster performance)."
+      "doc": "Douglas-Peucker 简化容差 (值越大意味着集合形状越简单以及更快的性能)。"
     },
     "cluster": {
       "type": "boolean",
       "default": false,
-      "doc": "If the data is a collection of point features, setting this to true clusters the points by radius into groups. Cluster groups become new `Point` features in the source with additional properties:\n * `cluster` Is `true` if the point is a cluster \n * `cluster_id` A unqiue id for the cluster to be used in conjunction with the [cluster inspection methods](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)\n * `point_count` Number of original points grouped into this cluster\n * `point_count_abbreviated` An abbreviated point count"
+      "doc": "如果数据是点要素的集合，将此设置为true会将点按半径聚类为组。聚类群组成为新的 `Point` 要素，具有以下额外属性：\n * `cluster` 如果该点是聚类群组，则为true \n * `cluster_id` 聚类群组的唯一id，结合 [聚类群组检验方法](https://www.mapbox.com/mapbox-gl-js/api/#geojsonsource#getclusterexpansionzoom)使用\n * `point_count` 该聚类群组中初始的点的数目\n * `point_count_abbreviated` 简化的点数目"
     },
     "clusterRadius": {
       "type": "number",
       "default": 50,
       "minimum": 0,
-      "doc": "Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal to the width of a tile."
+      "doc": "在聚类启用的情况下，每一个聚类簇的半径。512表示的一个半径等于切片的宽度。"
     },
     "clusterMaxZoom": {
       "type": "number",
-      "doc": "Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less than maxzoom (so that last zoom features are not clustered)."
+      "doc": "在聚类启用的情况下，聚类群组显示的最大缩放级别。默认比地图最大缩放级别低一级 (以便最后一级的要素不会聚类，也就是显示全部的原始点数据)。"
     },
     "lineMetrics": {
       "type": "boolean",
       "default": false,
-      "doc": "Whether to calculate line distance metrics. This is required for line layers that specify `line-gradient` values."
+      "doc": "是否计算行距离，对于指定`line-gradient`值的线图层是必须的。"
     }
   },
   "source_video": {
