@@ -385,27 +385,27 @@
       "type": "enum",
       "values": {
         "video": {
-          "doc": "A video data source."
+          "doc": "视频数据源。"
         }
       },
-      "doc": "The data type of the video source."
+      "doc": "视频源的数据类型。'urls'的值是一个数组。数组中的每个url对应着该视频'source'的一种格式，以便支持不同浏览器。`'coordinates'`数组包含以顺时针列出的`[longitude, latitude]`对表示视频的四个角。左上，右上、右下、左下。"
     },
     "urls": {
       "required": true,
       "type": "array",
       "value": "string",
-      "doc": "URLs to video content in order of preferred format."
+      "doc": "按首选格式排列视频内容的url。"
     },
     "coordinates": {
       "required": true,
-      "doc": "Corners of video specified in longitude, latitude pairs.",
+      "doc": "以经纬度对指定的视频的范围。",
       "type": "array",
       "length": 4,
       "value": {
         "type": "array",
         "length": 2,
         "value": "number",
-        "doc": "A single longitude, latitude pair."
+        "doc": "单个的经纬度对。"
       }
     }
   },
@@ -415,40 +415,40 @@
       "type": "enum",
       "values": {
         "image": {
-          "doc": "An image data source."
+          "doc": "图像数据源。`'url'`是图像的存放位置。`'coordinates'`数组包含以顺时针列出的`[longitude, latitude]`对表示图像的四个角。左上，右上、右下、左下。"
         }
       },
-      "doc": "The data type of the image source."
+      "doc": "图像源的数据类型。"
     },
     "url": {
       "required": true,
       "type": "string",
-      "doc": "URL that points to an image."
+      "doc": "指向图像的url。"
     },
     "coordinates": {
       "required": true,
-      "doc": "Corners of image specified in longitude, latitude pairs.",
+      "doc": "以经纬度对指定的图像的范围。",
       "type": "array",
       "length": 4,
       "value": {
         "type": "array",
         "length": 2,
         "value": "number",
-        "doc": "A single longitude, latitude pair."
+        "doc": "单个的经纬度对。"
       }
     }
   },
   "layer": {
     "id": {
       "type": "string",
-      "doc": "Unique layer name.",
+      "doc": "唯一的不可重复的图层名称。",
       "required": true
     },
     "type": {
       "type": "enum",
       "values": {
         "fill": {
-          "doc": "A filled polygon with an optional stroked border.",
+          "doc": "带有可选描边边框的填充多边形。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -459,7 +459,7 @@
           }
         },
         "line": {
-          "doc": "A stroked line.",
+          "doc": "描边线。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -470,7 +470,7 @@
           }
         },
         "symbol": {
-          "doc": "An icon or a text label.",
+          "doc": "icon或文本标注。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -481,7 +481,7 @@
           }
         },
         "circle": {
-          "doc": "A filled circle.",
+          "doc": "填充圆。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -492,7 +492,7 @@
           }
         },
         "heatmap": {
-          "doc": "A heatmap.",
+          "doc": "热力图。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.41.0",
@@ -503,7 +503,7 @@
           }
         },
         "fill-extrusion": {
-          "doc": "An extruded (3D) polygon.",
+          "doc": "拉伸的 (3D) 多边形。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.27.0",
@@ -514,7 +514,7 @@
           }
         },
         "raster": {
-          "doc": "Raster map textures such as satellite imagery.",
+          "doc": "栅格地图的纹理，如卫星影像。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -525,7 +525,7 @@
           }
         },
         "hillshade": {
-          "doc": "Client-side hillshading visualization based on DEM data. Currently, the implementation only supports Mapbox Terrain RGB and Mapzen Terrarium tiles.",
+          "doc": "基于DEM的客户端山体阴影可视化。目前支持 Mapbox Terrain RGB 和 Mapzen Terrarium 瓦片。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.43.0",
@@ -536,7 +536,7 @@
           }
         },
         "background": {
-          "doc": "The background color or pattern of the map.",
+          "doc": "地图的背景颜色或图案。",
           "sdk-support": {
             "basic functionality": {
               "js": "0.10.0",
@@ -547,44 +547,44 @@
           }
         }
       },
-      "doc": "Rendering type of this layer.",
+      "doc": "该图层的渲染类型。",
       "required": true
     },
     "metadata": {
       "type": "*",
-      "doc": "Arbitrary properties useful to track with the layer, but do not influence rendering. Properties should be prefixed to avoid collisions, like 'mapbox:'."
+      "doc": "如何用户跟踪图层的属性，不影响渲染。属性应该添加前缀以避免冲突，类似 'mapbox:'。"
     },
     "source": {
       "type": "string",
-      "doc": "Name of a source description to be used for this layer. Required for all layer types except `background`."
+      "doc": "用于该图层源描述的名称，除了 `background` 之外的所有类型的图层都需要此属性。"
     },
     "source-layer": {
       "type": "string",
-      "doc": "Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources."
+      "doc": "对于矢量切片数据源的图层可以使用。其他所有数据源类型，包括GeoJSON数据源都不能使用。"
     },
     "minzoom": {
       "type": "number",
       "minimum": 0,
       "maximum": 24,
-      "doc": "The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden."
+      "doc": "该图层的最小缩放级别。当缩放级别小于minzoom时，该图层不显示。"
     },
     "maxzoom": {
       "type": "number",
       "minimum": 0,
       "maximum": 24,
-      "doc": "The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden."
+      "doc": "该图层的最大缩放级别。当缩放级别大于maxzoom时，该图层不显示。"
     },
     "filter": {
       "type": "filter",
-      "doc": "A expression specifying conditions on source features. Only features that match the filter are displayed. The `feature-state` expression is not supported in filter expressions."
+      "doc": "指定源要素条件限制的表达式。只有符合条件的才会显示。表达式不支持 `feature-state` 表达式。"
     },
     "layout": {
       "type": "layout",
-      "doc": "Layout properties for the layer."
+      "doc": "图层的布局属性。"
     },
     "paint": {
       "type": "paint",
-      "doc": "Default paint properties for this layer."
+      "doc": "此图层默认绘制的属性。"
     }
   },
   "layout": [
@@ -603,14 +603,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "显示该图层。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "不显示该图层。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "是否显示该图层。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -627,14 +627,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "显示该图层。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "不显示该图层。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "是否显示该图层。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -651,14 +651,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "显示该图层。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "不显示该图层。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "是否显示该图层。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -675,14 +675,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "该图层显示。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "该图层不显示。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "是否显示此图层。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.41.0",
@@ -699,14 +699,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "该图层显示。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "该图层不显示。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "是否显示此图层",
       "sdk-support": {
         "basic functionality": {
           "js": "0.27.0",
@@ -723,17 +723,17 @@
       "type": "enum",
       "values": {
         "butt": {
-          "doc": "A cap with a squared-off end which is drawn to the exact endpoint of the line."
+          "doc": "方形末端样式，该样式将绘制在线的端点处，未超过线的端点。"
         },
         "round": {
-          "doc": "A cap with a rounded end which is drawn beyond the endpoint of the line at a radius of one-half of the line's width and centered on the endpoint of the line."
+          "doc": "圆形末端样式，在线的端点处以线宽一半为半径，以线的端点为中心绘制超出线的端点。"
         },
         "square": {
-          "doc": "A cap with a squared-off end which is drawn beyond the endpoint of the line at a distance of one-half of the line's width."
+          "doc": "方形末端样式，在线宽的一半处绘制超出线的端点。"
         }
       },
       "default": "butt",
-      "doc": "The display of line endings.",
+      "doc": "线的端点样式。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -755,17 +755,17 @@
       "type": "enum",
       "values": {
         "bevel": {
-          "doc": "A join with a squared-off end which is drawn beyond the endpoint of the line at a distance of one-half of the line's width."
+          "doc": "用方形末端样式去连接，绘制在线宽的一半处，超出线的端点。"
         },
         "round": {
-          "doc": "A join with a rounded end which is drawn beyond the endpoint of the line at a radius of one-half of the line's width and centered on the endpoint of the line."
+          "doc": "用圆型末端样式去连接，以线的端点为中心，以线宽的一半为半径绘制，超出线的端点。"
         },
         "miter": {
-          "doc": "A join with a sharp, angled corner which is drawn with the outer sides beyond the endpoint of the path until they meet."
+          "doc": "用带有尖角的样式去连接，其外侧绘制超出线路径范围直到两边两侧相交。"
         }
       },
       "default": "miter",
-      "doc": "The display of lines when joining.",
+      "doc": "线之间连接的样式。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -792,7 +792,7 @@
     "line-miter-limit": {
       "type": "number",
       "default": 2,
-      "doc": "Used to automatically convert miter joins to bevel joins for sharp angles.",
+      "doc": "自动将尖角连接样式转换为方形连接样式。",
       "requires": [
         {
           "line-join": "miter"
@@ -818,7 +818,7 @@
     "line-round-limit": {
       "type": "number",
       "default": 1.05,
-      "doc": "Used to automatically convert round joins to miter joins for shallow angles.",
+      "doc": "自动将圆角连接样式转换为尖角连接样式。",
       "requires": [
         {
           "line-join": "round"
@@ -845,14 +845,14 @@
       "type": "enum",
       "values": {
         "visible": {
-          "doc": "The layer is shown."
+          "doc": "显示该图层。"
         },
         "none": {
-          "doc": "The layer is not shown."
+          "doc": "不显示该图层。"
         }
       },
       "default": "visible",
-      "doc": "Whether this layer is displayed.",
+      "doc": "该图层是否显示。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
@@ -870,17 +870,17 @@
       "type": "enum",
       "values": {
         "point": {
-          "doc": "The label is placed at the point where the geometry is located."
+          "doc": "位于几何图形所在位置的注记。"
         },
         "line": {
-          "doc": "The label is placed along the line of the geometry. Can only be used on `LineString` and `Polygon` geometries."
+          "doc": "沿着几何图形边缘的注记，只能用于 `LineString` 和 `Polygon` 几何图形。"
         },
         "line-center": {
-          "doc": "The label is placed at the center of the line of the geometry. Can only be used on `LineString` and `Polygon` geometries. Note that a single feature in a vector tile may contain multiple line geometries."
+          "doc": "位于县中的注记。只能用于 `LineString` 和 `Polygon` 几何图形。注意矢量切片中的单个要素可能包含多个线图形。"
         }
       },
       "default": "point",
-      "doc": "Label placement relative to its geometry.",
+      "doc": "相对于几何图形位置的注记。",
       "sdk-support": {
         "basic functionality": {
           "js": "0.10.0",
